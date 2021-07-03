@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2021-07-03 15:14:03
+-- 生成日期： 2021-07-03 17:58:22
 -- 服务器版本： 10.4.17-MariaDB
 -- PHP 版本： 8.0.2
 
@@ -20,14 +20,16 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `newbee`
 --
-CREATE DATABASE IF NOT EXISTS `newbee` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `newbee` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `newbee`;
+
 -- --------------------------------------------------------
 
 --
 -- 表的结构 `admin`
 --
 
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `aid` int(11) NOT NULL COMMENT 'ID',
   `account` varchar(32) NOT NULL COMMENT '登录名',
@@ -48,12 +50,13 @@ INSERT INTO `admin` (`aid`, `account`, `password`, `nickname`) VALUES
 -- 表的结构 `carousel`
 --
 
+DROP TABLE IF EXISTS `carousel`;
 CREATE TABLE `carousel` (
   `imageID` int(11) NOT NULL COMMENT '轮播图ID',
   `imageUrl` longtext NOT NULL COMMENT '轮播图链接',
   `jumpUrl` longtext NOT NULL DEFAULT '#' COMMENT '跳转链接',
   `sortValue` int(16) NOT NULL COMMENT '排序值',
-  `createTime` datetime DEFAULT COMMENT '添加时间'
+  `createTime` datetime DEFAULT current_timestamp() COMMENT '添加时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -71,11 +74,12 @@ INSERT INTO `carousel` (`imageID`, `imageUrl`, `jumpUrl`, `sortValue`, `createTi
 -- 表的结构 `classify`
 --
 
+DROP TABLE IF EXISTS `classify`;
 CREATE TABLE `classify` (
   `classID` int(8) NOT NULL,
   `className` varchar(32) NOT NULL,
   `sortValue` int(16) NOT NULL,
-  `createTime` timestamp NULL DEFAULT 
+  `createTime` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -101,6 +105,7 @@ INSERT INTO `classify` (`classID`, `className`, `sortValue`, `createTime`) VALUE
 -- 表的结构 `goods`
 --
 
+DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `goodID` int(16) NOT NULL COMMENT '商品ID',
   `classID` int(8) NOT NULL COMMENT '分类ID',
@@ -159,13 +164,14 @@ INSERT INTO `goods` (`goodID`, `classID`, `name`, `intr`, `price`, `salePrice`, 
 -- 表的结构 `groom`
 --
 
+DROP TABLE IF EXISTS `groom`;
 CREATE TABLE `groom` (
   `groomID` int(16) NOT NULL COMMENT '推荐ID',
   `goodID` int(16) NOT NULL COMMENT '商品ID',
   `goodName` varchar(64) NOT NULL COMMENT '商品名称',
   `jumpUrl` longtext NOT NULL COMMENT '跳转链接',
   `sortValue` int(16) NOT NULL COMMENT '排序值',
-  `createTime` datetime DEFAULT  COMMENT '添加时间'
+  `createTime` datetime DEFAULT current_timestamp() COMMENT '添加时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -190,13 +196,14 @@ INSERT INTO `groom` (`groomID`, `goodID`, `goodName`, `jumpUrl`, `sortValue`, `c
 -- 表的结构 `hotSale`
 --
 
+DROP TABLE IF EXISTS `hotSale`;
 CREATE TABLE `hotSale` (
   `hotID` int(16) NOT NULL COMMENT '热卖ID',
   `goodID` int(16) NOT NULL COMMENT '商品ID',
   `goodName` varchar(64) NOT NULL COMMENT '商品名称',
   `jumpUrl` longtext NOT NULL COMMENT '跳转链接',
   `sortValue` int(16) NOT NULL COMMENT '排序值',
-  `createTime` datetime DEFAULT  COMMENT '添加事件'
+  `createTime` datetime DEFAULT current_timestamp() COMMENT '添加事件'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -215,13 +222,14 @@ INSERT INTO `hotSale` (`hotID`, `goodID`, `goodName`, `jumpUrl`, `sortValue`, `c
 -- 表的结构 `newGood`
 --
 
+DROP TABLE IF EXISTS `newGood`;
 CREATE TABLE `newGood` (
   `newID` int(16) NOT NULL COMMENT '新品ID',
   `goodID` int(16) NOT NULL COMMENT '商品ID',
   `goodName` varchar(64) NOT NULL COMMENT '商品名称',
   `jumpUrl` longtext NOT NULL COMMENT '跳转链接',
   `sortValue` int(16) NOT NULL COMMENT '排序值',
-  `createTime` datetime DEFAULT  COMMENT '添加时间'
+  `createTime` datetime DEFAULT current_timestamp() COMMENT '添加时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -240,6 +248,7 @@ INSERT INTO `newGood` (`newID`, `goodID`, `goodName`, `jumpUrl`, `sortValue`, `c
 -- 表的结构 `orderDetail`
 --
 
+DROP TABLE IF EXISTS `orderDetail`;
 CREATE TABLE `orderDetail` (
   `did` int(64) NOT NULL,
   `orderID` int(64) NOT NULL,
@@ -273,12 +282,13 @@ INSERT INTO `orderDetail` (`did`, `orderID`, `goodID`, `count`) VALUES
 -- 表的结构 `orderInfo`
 --
 
+DROP TABLE IF EXISTS `orderInfo`;
 CREATE TABLE `orderInfo` (
   `orderID` int(64) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `orderStatus` int(8) NOT NULL,
   `payType` int(8) NOT NULL,
-  `createTime` datetime DEFAULT 
+  `createTime` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -303,13 +313,14 @@ INSERT INTO `orderInfo` (`orderID`, `price`, `orderStatus`, `payType`, `createTi
 -- 表的结构 `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `uid` int(16) NOT NULL,
   `nickname` varchar(32) NOT NULL,
   `account` varchar(32) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `isLogout` tinyint(1) NOT NULL,
-  `regTime` datetime DEFAULT 
+  `regTime` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
